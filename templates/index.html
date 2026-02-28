@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hamro Market</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+font-family: Arial;
+padding:20px;
+background:#f5f5f5;
+}
+
+.product{
+background:white;
+padding:15px;
+margin-bottom:20px;
+border-radius:12px;
+box-shadow:0px 0px 8px rgba(0,0,0,0.1);
+}
+
+img{
+width:100%;
+border-radius:10px;
+}
+
+button{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+margin-top:10px;
+font-size:16px;
+}
+
+.add-btn{
+background:green;
+color:white;
+}
+
+.logout-btn{
+background:black;
+color:white;
+}
+
+.whatsapp-btn{
+background:green;
+color:white;
+}
+
+.message-btn{
+background:blue;
+color:white;
+}
+
+.delete-btn{
+background:red;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>🛒 Hamro Market</h2>
+
+<a href="/add">
+<button class="add-btn">➕ Add Product</button>
+</a>
+
+<a href="/logout">
+<button class="logout-btn" style="margin-top:10px;">
+🚪 Logout
+</button>
+</a>
+
+<hr>
+
+{% for product in products %}
+
+<div class="product">
+
+<img src="/static/uploads/{{product[3]}}">
+
+<h3>{{product[1]}}</h3>
+
+<p>💰 Price: {{product[2]}}</p>
+
+<!-- WhatsApp Contact -->
+<a href="https://wa.me/977XXXXXXXXXX?text=Hello%20I%20am%20interested%20in%20your%20product"
+target="_blank">
+
+<button class="whatsapp-btn">
+💬 Contact via WhatsApp
+</button>
+
+</a>
+
+<button class="message-btn">
+✉ Send Message
+</button>
+
+<button class="delete-btn">
+🗑 Delete Product
+</button>
+
+</div>
+
+{% endfor %}
+
+</body>
+</html>
