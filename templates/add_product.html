@@ -1,30 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Add Product</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+@app.route("/add", methods=["GET", "POST"])
+def add_product():
 
-<body>
+    if "user" not in session:
+        return redirect("/login")
 
-<h2>Add Product</h2>
+    if request.method == "POST":
 
-<form method="POST">
+        name = request.form.get("name")
+        price = request.form.get("price")
 
-<label>Product Name</label><br>
-<input type="text" name="name" required>
-<br><br>
+        if "image" not in request.files:
+            return "Image not uploaded"
 
-<label>Price</label><br>
-<input type="text" name="price" required>
-<br><br>
+        image = request.files.get("image")
 
-<button type="submit">Save Product</button>
+        if image.filename == "":
+            return "No image selected"
 
-</form>
+        seller = session["user"]
 
-<br>
-<a href="/">Back Home</a>
+        image_path = os.path.join(UPLOAD_FOLDER, image.filename)
+        image.save(image_path)
 
-</body>
-</html>
+        conn = sqlite3.connect("database.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "INSERT INTO products(name,price,image,seller) VALUES(?,?,?,?)",
+            (name, price, image.filename, seller)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/")
+
+    return render_template("add_product.html")
